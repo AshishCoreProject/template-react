@@ -1,47 +1,94 @@
 import { Scene } from 'phaser';
 
-export class Preloader extends Scene
-{
-    constructor ()
-    {
+export class Preloader extends Scene {
+    constructor() {
         super('Preloader');
     }
 
-    init ()
-    {
-        //  We loaded this image in our Boot Scene, so we can display it here
-        this.add.image(512, 384, 'background');
+    init() {
+        // Get the center coordinates of the camera
+        const { width, height } = this.cameras.main;
+        const x = width * 0.5;
+        const y = height * 0.5;
+        const Orange = 0xffa500; // Define the color orange
 
-        //  A simple progress bar. This is the outline of the bar.
-        this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
+        // Create animated rectangles (bars) for the loading animation
+        const left = this.add.rectangle(x - 50, y, 40, 75, Orange, 1);
+        const middle = this.add.rectangle(x, y, 40, 75, Orange, 1);
+        const right = this.add.rectangle(x + 50, y, 40, 75, Orange, 1);
 
-        //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-        const bar = this.add.rectangle(512-230, 384, 4, 28, 0xffffff);
+        // Add tween animations for the rectangles
+        this.add.tween({
+            targets: left,
+            scaleY: 2,
+            duration: 300,
+            repeat: -1,
+            repeatDelay: 300,
+            yoyo: true,
+            ease: Phaser.Math.Easing.Bounce,
+        });
 
-        //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
-        this.load.on('progress', (progress) => {
+        this.add.tween({
+            targets: middle,
+            scaleY: 2,
+            duration: 300,
+            delay: 100,
+            repeat: -1,
+            repeatDelay: 300,
+            yoyo: true,
+            ease: Phaser.Math.Easing.Bounce,
+        });
 
-            //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
-            bar.width = 4 + (460 * progress);
-
+        this.add.tween({
+            targets: right,
+            scaleY: 2,
+            duration: 300,
+            delay: 200,
+            repeat: -1,
+            repeatDelay: 300,
+            yoyo: true,
+            ease: Phaser.Math.Easing.Bounce,
         });
     }
 
-    preload ()
-    {
-        //  Load the assets for the game - Replace with your own assets
-        this.load.setPath('assets');
+    preload() {
+        const { width, height } = this.cameras.main;
 
+        // Add a progress text
+        const progressText = this.add.text(width * 0.5, height * 0.5 + 100, 'Loading...', {
+            fontSize: '20px',
+            color: '#ffffff',
+        }).setOrigin(0.5);
+
+        // Handle the loading progress
+        this.load.on('progress', (progress) => {
+            progressText.setText(`Loading... ${Math.floor(progress * 100)}%`);
+        });
+
+        // Handle the loading complete event
+        this.load.on('complete', () => {
+            progressText.setText('Loading complete!');
+        });
+
+        // Load your assets
+        this.load.setPath('assets');
+        this.load.image('plane', 'plane.png');
         this.load.image('logo', 'logo.png');
         this.load.image('star', 'star.png');
+        this.load.image('cloud', 'cloud.png');
+        this.load.image('road', 'road.png');
+        this.load.audio('planeSound', 'audio/planeSound.mp3');
+
+        // Simulate longer loading for visual effect (optional)
+        for (let i = 0; i < 100; i++) {
+            this.load.image(`dummy${i}`, 'plane.png');
+        }
     }
 
-    create ()
-    {
-        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-        //  For example, you can define global animations here, so we can use them in other scenes.
-
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
+    create() {
+        // Add a delay before transitioning to the next scene
+        this.time.delayedCall(1500, () => {
+            this.scene.start('MainMenu'); // Replace 'MainMenu' with your next scene
+        });
     }
 }
