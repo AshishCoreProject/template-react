@@ -1,3 +1,4 @@
+import React from 'react';
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 import { config } from '../main';
@@ -5,7 +6,7 @@ import { config } from '../main';
 export class MainMenu extends Scene
 {
     logoTween;
-    
+
     constructor ()
     {
         super('MainMenu');
@@ -23,44 +24,40 @@ export class MainMenu extends Scene
         //     align: 'center'
         // }).setDepth(100).setOrigin(0.5);
         this.plane = this.add.image(86, 569, 'plane').setDepth(1);
-        this.cloud = this.add.tileSprite(0, -22, 0, 490,'cloud').setOrigin(0,0);
-        this.road = this.add.tileSprite(0, 179,0, 490,'road').setOrigin(0,0);
+        this.cloud = this.add.tileSprite(0, -22, 0, 490, 'cloud').setOrigin(0, 0);
+        this.road = this.add.tileSprite(0, 179, 0, 490, 'road').setOrigin(0, 0);
         this.road.scaleX = 2.11;
         this.road.scaleY = 1.07;
         this.cloud.scaleX = 2.08;
         this.cloud.scaleY = 0.84;
 
-        this.planeAudio = this.sound.add('planeSound')
+        this.planeAudio = this.sound.add('planeSound');
+
         EventBus.emit('current-scene-ready', this);
     }
 
-    update(){
-        this.movePlane()
+    update() {
+        this.movePlane();
         this.road.tilePositionX += 2;
         this.cloud.tilePositionX += 1;
     }
 
-    movePlane(){
+    movePlane() {
         this.planeAudio.play();
         this.planeAudio.loop = false;
-        if (this.plane.x < this.crash ) {
-            if(this.plane.x < this.fly){
+        if (this.plane.x < this.crash) {
+            if (this.plane.x < this.fly) {
                 this.plane.x += 0.9;
                 this.plane.rotation = 0;
-                
-            }else{
+            } else {
                 this.plane.x += 1.2;
                 this.plane.y -= 0.64;
                 this.plane.rotation = -0.28;
-                
             }
-        }
-        else{
+        } else {
             this.plane.rotation = 0;
             this.planeAudio.stop();
         }
     }
-
-
-
 }
+

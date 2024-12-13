@@ -6,16 +6,16 @@ const BetSection = ()=> {
     const [betMoney, setBetMoney] = useState(10);
     const [placeBet, setPlaceBet] = useState(false);
     const [betLocked, setBetLocked] = useState(false);
-    const [cashout, setCashout] = useState(false)
+    const [cashout, setCashout] = useState(false);
     // const [betLoader, setBetLoader] = useState(false);
 
 
     const handleIncrease = () => {
-        setBetMoney(()=> betMoney + 1)
+        setBetMoney( ()=> betMoney + 1)
     }
 
     const handleDecrease = () => {
-        setBetMoney(()=> betMoney - 1)
+        setBetMoney( ()=> betMoney - 1)
     }
 
     const handlePlaceBet = ()=> {
