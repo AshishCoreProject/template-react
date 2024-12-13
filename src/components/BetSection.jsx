@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PostContext } from "../context/PostContext";
 
 
 const BetSection = ()=> {
-
+    const {handleIncreaseScore} = useContext(PostContext)
     const [betMoney, setBetMoney] = useState(10);
     const [placeBet, setPlaceBet] = useState(false);
     const [betLocked, setBetLocked] = useState(false);
@@ -40,7 +41,7 @@ const BetSection = ()=> {
                         <div className="flex items-center">
                             <p className="w-[100px] font-bold text-center text-lg">${betMoney}</p>
                         </div>
-                    <button className="betButton" onClick={handleIncrease} >+</button>
+                    <button className="betButton" onClick={handleIncreaseScore} >+</button>
                 </div>
                 <div>
                     <button onClick={handlePlaceBet} style={{background: betLocked? "#FFAF00": ( placeBet? "#FF4545": "#3CCF4E")}} className={ placeBet ? 'placeBetButtonTrue' : 'placeBetButton' }>

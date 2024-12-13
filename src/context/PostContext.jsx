@@ -1,6 +1,7 @@
 import { useState, createContext } from "react";
-
+import Options from "../options";
 const PostContext = createContext();
+
 
 function PostProvider({children}){
     const [state, setState] = useState("Ashish");
@@ -12,6 +13,8 @@ function PostProvider({children}){
     
     function handleIncreaseScore(){
         gameState.score += 1;
+        Options.defaultBalance +=1
+        console.log(Options.defaultBalance, "defautl balance");
     }
 
     console.log(gameState.score, "updated score");

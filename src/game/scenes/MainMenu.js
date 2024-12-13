@@ -2,6 +2,7 @@ import React from 'react';
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 import { config } from '../main';
+import Options from '../../options';
 
 export class MainMenu extends Scene
 {
@@ -18,11 +19,15 @@ export class MainMenu extends Scene
     {
         // this.add.image(512, 384, 'background');
         // this.logo = this.add.image(512, 300, 'logo').setDepth(100);
-        // this.add.text(512, 460, 'Main Menu', {
-        //     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-        //     stroke: '#000000', strokeThickness: 8,
-        //     align: 'center'
-        // }).setDepth(100).setOrigin(0.5);
+        this.add.text(512, 460, Options.defaultBalance, {
+            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 8,
+            align: 'center'
+        }).setDepth(100).setOrigin(0.5);
+        this.helloWorld = this.add.text( 700, 700, Options.defaultBalance)
+        .setFont("40px Arial")
+        .setColor('#000000').setDepth(1);
+    
         this.plane = this.add.image(86, 569, 'plane').setDepth(1);
         this.cloud = this.add.tileSprite(0, -22, 0, 490, 'cloud').setOrigin(0, 0);
         this.road = this.add.tileSprite(0, 179, 0, 490, 'road').setOrigin(0, 0);
