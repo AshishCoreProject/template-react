@@ -1,11 +1,15 @@
 import PropTypes from 'prop-types';
-import { forwardRef, useEffect, useLayoutEffect, useRef } from 'react';
+import { forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import StartGame from './main';
 import { EventBus } from './EventBus';
+import { PostContext } from '../context/PostContext';
+import { config } from './main';
 
 export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene }, ref)
 {
     const game = useRef();
+
+
 
     // Create the game inside a useLayoutEffect hook to avoid the game being created outside the DOM
     useLayoutEffect(() => {
@@ -21,7 +25,6 @@ export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene }
         }
 
         return () => {
-
             if (game.current)
             {
                 game.current.destroy(true);
@@ -30,6 +33,7 @@ export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene }
 
         }
     }, [ref]);
+
 
     useEffect(() => {
 
@@ -43,6 +47,8 @@ export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene }
             
         });
 
+    
+
         return () => {
 
             EventBus.removeListener('current-scene-ready');
@@ -52,7 +58,9 @@ export const PhaserGame = forwardRef(function PhaserGame ({ currentActiveScene }
     }, [currentActiveScene, ref])
 
     return (
-        <div id="game-container"></div>
+        <>
+          <div id="game-container"></div>
+        </>
     );
 
 });

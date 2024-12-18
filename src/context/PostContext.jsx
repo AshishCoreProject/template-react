@@ -12,9 +12,7 @@ function PostProvider({children}){
     });
     
     function handleIncreaseScore(){
-        gameState.score += 1;
-        Options.defaultBalance +=1
-        console.log(Options.defaultBalance, "defautl balance");
+        setGameState(()=> gameState.score += 1)
     }
 
     console.log(gameState.score, "updated score");

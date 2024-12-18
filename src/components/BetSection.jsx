@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { PostContext } from "../context/PostContext";
+import { EventBus } from "../game/EventBus";
 
 
 const BetSection = ()=> {
-    const {handleIncreaseScore} = useContext(PostContext)
+    const {setGameState, gameState } = useContext(PostContext)
     const [betMoney, setBetMoney] = useState(10);
     const [placeBet, setPlaceBet] = useState(false);
     const [betLocked, setBetLocked] = useState(false);
@@ -14,9 +15,19 @@ const BetSection = ()=> {
     const handleIncrease = () => {
         setBetMoney( ()=> betMoney + 1)
     }
+  
+    
+    function handleAdd(){
+        setGameState((prevState) => ({...prevState, score : gameState.score + 1 }))
+    }
+    useEffect(() => {
+        // Emit gameState updates to Phaser
+        EventBus.emit("IncreaseScore", gameState);
+    }, [gameState]);
+    
 
-    const handleDecrease = () => {
-        setBetMoney( ()=> betMoney - 1)
+    const handleMinus = () => {
+        setGameState((prevState) => ({...prevState, score: gameState.score - 1}));
     }
 
     const handlePlaceBet = ()=> {
@@ -37,11 +48,11 @@ const BetSection = ()=> {
        <div className="betSection">
             <div className="upperBetSection">
                 <div className="flex p-2">
-                    <button className="betButton" onClick={handleDecrease}>-</button>
+                    <button className="betButton" onClick={handleMinus}>-</button>
                         <div className="flex items-center">
                             <p className="w-[100px] font-bold text-center text-lg">${betMoney}</p>
                         </div>
-                    <button className="betButton" onClick={handleIncreaseScore} >+</button>
+                    <button className="betButton" onClick={handleAdd} >+</button>
                 </div>
                 <div>
                     <button onClick={handlePlaceBet} style={{background: betLocked? "#FFAF00": ( placeBet? "#FF4545": "#3CCF4E")}} className={ placeBet ? 'placeBetButtonTrue' : 'placeBetButton' }>

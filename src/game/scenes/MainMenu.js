@@ -19,15 +19,17 @@ export class MainMenu extends Scene
     {
         // this.add.image(512, 384, 'background');
         // this.logo = this.add.image(512, 300, 'logo').setDepth(100);
-        this.add.text(512, 460, Options.defaultBalance, {
+        this.score = this.add.text(512, 460, "0", {
             fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         }).setDepth(100).setOrigin(0.5);
-        this.helloWorld = this.add.text( 700, 700, Options.defaultBalance)
-        .setFont("40px Arial")
-        .setColor('#000000').setDepth(1);
-    
+
+        EventBus.on("IncreaseScore", (gameState) => {
+            this.score.setText(gameState.score);
+            console.log(gameState.score, "This my Score");
+        })
+
         this.plane = this.add.image(86, 569, 'plane').setDepth(1);
         this.cloud = this.add.tileSprite(0, -22, 0, 490, 'cloud').setOrigin(0, 0);
         this.road = this.add.tileSprite(0, 179, 0, 490, 'road').setOrigin(0, 0);
