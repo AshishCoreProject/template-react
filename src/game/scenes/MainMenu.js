@@ -3,6 +3,7 @@ import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 import { config } from '../main';
 import Options from '../../options';
+import Coin from '../../base_classes/Coin';
 
 export class MainMenu extends Scene
 {
@@ -15,15 +16,20 @@ export class MainMenu extends Scene
         this.fly = 200;
     }
 
+    // init(data){
+    //     this.context = data.context || {}
+    // }
+    
     create ()
     {
         // this.add.image(512, 384, 'background');
         // this.logo = this.add.image(512, 300, 'logo').setDepth(100);
-        this.add.text(512, 460, Options.defaultBalance, {
-            fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center'
-        }).setDepth(100).setOrigin(0.5);
+        // this.add.text(512, 460, this.context.playerHealth, {
+        //     fontFamily: 'Arial Black', fontSize: 38, color: '#ffffff',
+        //     stroke: '#000000', strokeThickness: 8,
+        //     align: 'center'
+        // }).setDepth(100).setOrigin(0.5);
+
         this.helloWorld = this.add.text( 700, 700, Options.defaultBalance)
         .setFont("40px Arial")
         .setColor('#000000').setDepth(1);
@@ -35,8 +41,10 @@ export class MainMenu extends Scene
         this.road.scaleY = 1.07;
         this.cloud.scaleX = 2.08;
         this.cloud.scaleY = 0.84;
+        // this.planeAudio = this.sound.add('planeSound');
 
-        this.planeAudio = this.sound.add('planeSound');
+        this.coin = new Coin(this);
+        this.coin.add();
 
         EventBus.emit('current-scene-ready', this);
     }
@@ -48,8 +56,8 @@ export class MainMenu extends Scene
     }
 
     movePlane() {
-        this.planeAudio.play();
-        this.planeAudio.loop = false;
+        // this.planeAudio.play();
+        // this.planeAudio.loop = false;
         if (this.plane.x < this.crash) {
             if (this.plane.x < this.fly) {
                 this.plane.x += 0.9;
@@ -61,7 +69,7 @@ export class MainMenu extends Scene
             }
         } else {
             this.plane.rotation = 0;
-            this.planeAudio.stop();
+            // this.planeAudio.stop();
         }
     }
 }

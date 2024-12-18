@@ -2,6 +2,7 @@ import { Boot } from './scenes/Boot';
 import { Game } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 import { MainMenu } from './scenes/MainMenu';
+import  Coin  from "../base_classes/Coin"
 import Phaser from 'phaser';
 import { Preloader } from './scenes/Preloader';
 
@@ -17,6 +18,7 @@ export const config = {
         Boot,
         Preloader,
         MainMenu,
+        Coin,
         Game,
         GameOver
     ]

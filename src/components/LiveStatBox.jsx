@@ -3,7 +3,6 @@ import { PostContext } from "../context/PostContext";
 
 const LiveStatBox = ()=> {
     const {gameState} = useContext(PostContext);
-    console.log(gameState);
     return (
         <div>
             <div className='livestatbox'>

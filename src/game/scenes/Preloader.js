@@ -87,7 +87,7 @@ export class Preloader extends Scene {
 
     create() {
         // Add a delay before transitioning to the next scene
-        this.time.delayedCall(1500, () => {
+        this.time.delayedCall(50, () => {
             this.scene.start('MainMenu'); // Replace 'MainMenu' with your next scene
         });
     }

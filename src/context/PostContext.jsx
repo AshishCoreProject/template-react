@@ -4,7 +4,7 @@ const PostContext = createContext();
 
 
 function PostProvider({children}){
-    const [state, setState] = useState("Ashish");
+    const [playerHealth, setPlayerHealth] = useState(100);
     const [gameState, setGameState] = useState({
         score: 0,
         playerStatus: 'idle', // 'idle', 'playing', 'paused', etc.
@@ -14,14 +14,16 @@ function PostProvider({children}){
     function handleIncreaseScore(){
         gameState.score += 1;
         Options.defaultBalance +=1
-        console.log(Options.defaultBalance, "defautl balance");
+        console.log(Options.defaultBalance, "default balance");
+        setPlayerHealth(()=> playerHealth + 1)
     }
 
     console.log(gameState.score, "updated score");
     return(
         <PostContext.Provider 
             value={{
-                state: state,
+                playerHealth:playerHealth,
+                setPlayerHealth: setPlayerHealth,
                 gameState : gameState,
                 setGameState : setGameState,
                 handleIncreaseScore: handleIncreaseScore,
