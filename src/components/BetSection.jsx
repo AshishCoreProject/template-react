@@ -4,7 +4,7 @@ import { EventBus } from "../game/EventBus";
 
 
 const BetSection = ()=> {
-    const {setGameState, gameState } = useContext(PostContext)
+    const {gameState, setGameState } = useContext(PostContext)
     const [betMoney, setBetMoney] = useState(10);
     const [placeBet, setPlaceBet] = useState(false);
     const [betLocked, setBetLocked] = useState(false);
@@ -16,18 +16,21 @@ const BetSection = ()=> {
         setBetMoney( ()=> betMoney + 1)
     }
   
-    
-    function handleAdd(){
-        setGameState((prevState) => ({...prevState, score : gameState.score + 1 }))
-    }
     useEffect(() => {
         // Emit gameState updates to Phaser
         EventBus.emit("IncreaseScore", gameState);
     }, [gameState]);
     
-
+    function handleAdd(){
+        if(gameState.score < 100){
+            setGameState((prevState) => ({...prevState, score : gameState.score + 10 }))
+        }
+    }
+    
     const handleMinus = () => {
-        setGameState((prevState) => ({...prevState, score: gameState.score - 1}));
+        if(gameState.score > 0){
+            setGameState((prevState) => ({...prevState, score: gameState.score - 10}));
+        }
     }
 
     const handlePlaceBet = ()=> {
@@ -36,7 +39,7 @@ const BetSection = ()=> {
         }else{
             setPlaceBet(!placeBet);
         }
-        console.log("button is clicked");
+
         setTimeout(()=> {
             setBetLocked(true);
             // setBetLoader(true)
@@ -50,7 +53,7 @@ const BetSection = ()=> {
                 <div className="flex p-2">
                     <button className="betButton" onClick={handleMinus}>-</button>
                         <div className="flex items-center">
-                            <p className="w-[100px] font-bold text-center text-lg">${betMoney}</p>
+                            <p className="w-[100px] font-bold text-center text-lg">${gameState.score}</p>
                         </div>
                     <button className="betButton" onClick={handleAdd} >+</button>
                 </div>

@@ -14,7 +14,7 @@ function PostProvider({children}){
     function handleIncreaseScore(){
         setGameState(()=> gameState.score += 1)
     }
-
+    
     console.log(gameState.score, "updated score");
     return(
         <PostContext.Provider 

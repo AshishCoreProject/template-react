@@ -69,19 +69,20 @@ export class Preloader extends Scene {
         this.load.on('complete', () => {
             progressText.setText('Loading complete!');
         });
-
+        this.load.path = '../../assets/';
         // Load your assets
         this.load.setPath('assets');
-        this.load.image('plane', 'plane.png');
-        this.load.image('logo', 'logo.png');
-        this.load.image('star', 'star.png');
-        this.load.image('cloud', 'cloud.png');
-        this.load.image('road', 'road.png');
+        this.load.image('plane', 'images/plane.png');
+        this.load.image('logo', 'images/logo.png');
+        this.load.image('star', 'images/star.png');
+        this.load.image('cloud', 'images/cloud.png');
+        this.load.image('road', 'images/road.png');
         this.load.audio('planeSound', 'audio/planeSound.mp3');
+        this.load.atlas('crash', 'images/crash/blast.png', 'images/crash/blast.json');
 
         // Simulate longer loading for visual effect (optional)
         for (let i = 0; i < 100; i++) {
-            this.load.image(`dummy${i}`, 'plane.png');
+            this.load.image(`dummy${i}`, 'images/plane.png');
         }
     }
 
